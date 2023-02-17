@@ -19,6 +19,7 @@
    [com.stuartsierra.component :as com]
    [com.stuartsierra.component.repl :refer [reset set-init start stop system]]
    [com.walmartlabs.schematic :as sc]
+   [datomic.client.api :as d]
    [net.wikipunk.boot :as boot]
    [net.wikipunk.chat :as chat]
    [net.wikipunk.ext :as ext]
@@ -31,8 +32,7 @@
    [net.wikipunk.rdf.schema :as schema]
    [net.wikipunk.temple :as temple]
    [zprint.core :as zprint]
-   [net.wikipunk.punk.db.boot]
-   [net.wikipunk.rdf.punk.db])
+   [net.wikipunk.punk.db :as db])
   (:refer-clojure :exclude [isa? descendants parents ancestors]))
 
 (set-init
@@ -49,3 +49,17 @@
   [& body]
   `(do (@user/reveal (do ~@body))
        true))
+
+(defn conn
+  "Returns the db value for the :rdf component."
+  []
+  (get-in system [:rdf :conn]))
+
+(defn db
+  "Returns the db value for the :rdf component."
+  []
+  (some-> (conn) (d/db)))
+
+(comment
+  (db/bootstrap (conn)))
+
