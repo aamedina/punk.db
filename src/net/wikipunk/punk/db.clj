@@ -38,6 +38,7 @@
    [net.wikipunk.rdf.formats]
    [net.wikipunk.rdf.jsonld]
    [net.wikipunk.rdf.ldp]
+   [net.wikipunk.rdf.geo]
    [net.wikipunk.rdf.ma]
    [net.wikipunk.rdf.oa]
    [net.wikipunk.rdf.odrl]
