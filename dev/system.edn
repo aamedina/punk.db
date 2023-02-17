@@ -1,0 +1,11 @@
+{:vocab  {:sc/create-fn net.wikipunk.rdf/map->UniversalTranslator
+          :init-ns      net.wikipunk.mop.init
+          :ns-prefix    "net.wikipunk.rdf."
+          :boot         [net.wikipunk.punk.db.boot/punk.db]}
+ :openai {:sc/create-fn net.wikipunk.openai/map->Client}
+ :client {:sc/create-fn datomic.client.api/client
+          :server-type  :dev-local
+          :system       "dev"}
+ :rdf    {:sc/create-fn net.wikipunk.datomic/map->Connection
+          :sc/refs      [:client]
+          :db-name      "punk.db"}}
