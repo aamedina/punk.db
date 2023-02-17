@@ -25,11 +25,7 @@
    [net.wikipunk.ext :as ext]
    [net.wikipunk.mop :as mop :refer [isa? descendants parents ancestors]]
    [net.wikipunk.openai :as openai]
-   [net.wikipunk.rdf :as r :refer [doc]]
-   [net.wikipunk.rdf.rdf :as rdf]
-   [net.wikipunk.rdf.rdfs :as rdfs]
-   [net.wikipunk.rdf.owl :as owl]
-   [net.wikipunk.rdf.schema :as schema]
+   [net.wikipunk.rdf :as rdf :refer [doc]]
    [net.wikipunk.temple :as temple]
    [zprint.core :as zprint]
    [net.wikipunk.punk.db :as db])
