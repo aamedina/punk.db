@@ -70,7 +70,7 @@
    :owl/onClass
    :owl/allValuesFrom
    :owl/versionInfo
-   :owl/inverseOf
+   #_:owl/inverseOf
    :owl/hasValue
    :owl/differentFrom
    :owl/minQualifiedCardinality
@@ -93,6 +93,8 @@
    :rdf/value
    :rdf/type
    :rdf/language
+   :rdfa/uri
+   :rdfa/prefix
    :fressian/tag
    :schema/rangeIncludes
    :schema/domainIncludes])
@@ -117,7 +119,18 @@
   (select-attributes [m]
     (some->> (not-empty (select-keys m *boot-keys*))
              (walk/prewalk rdf/unroll-langString)
-             (walk/prewalk rdf/unroll-blank)))
+             (walk/prewalk rdf/unroll-blank)
+             (walk/prewalk rdf/box-values)
+             (walk/prewalk (fn [form]
+                             (if (and (string? form)
+                                      (>= (count form) 4096))
+                               (subs form 0 4096)
+                               form)))
+             (walk/prewalk (fn [form]
+                             (if (and (:rdfs/isDefinedBy form)
+                                      (keyword? (:rdfs/isDefinedBy form)))
+                               (update form :rdfs/isDefinedBy rdf/iri)
+                               form)))))
   
   Boolean
   (select-attributes [bootstrap?]
@@ -207,11 +220,7 @@
   [h conn]
   (let [root *boot-keys*
         rf   (fn [db tx-data]
-               (try
-                 (:db-after (d/with db {:tx-data [tx-data]}))
-                 (catch Throwable ex
-                   (log/error ex (ex-data ex))
-                   (reduced tx-data))))]
+               (:db-after (d/with db {:tx-data [tx-data]})))]
     (binding [*boot-keys* [:db/id
                            :db/ident
                            :db/cardinality
