@@ -251,6 +251,6 @@
   expression."
   [db & body]
   `(binding [mop/*env* ~db]
-     (when-not (instance? datomic.core.db.Db mop/*env*)
+     (when-not (satisfies? datomic.client.api.protocols/Db mop/*env*)
        (throw (ex-info "*env* is not a datomic database" {:env mop/*env*})))
      ~@body))
