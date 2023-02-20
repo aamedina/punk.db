@@ -56,15 +56,15 @@
 
   impl/Client
   (administer-system [_ arg-map]
-    (impl/administer-system client arg-map))
+    (impl/administer-system client (merge {:db-name db-name} arg-map)))
   (list-databases [_ arg-map]
     (impl/list-databases client arg-map))
   (connect [_ arg-map]
-    (impl/connect client arg-map))
+    (impl/connect client (merge {:db-name db-name} arg-map)))
   (create-database [_ arg-map]
-    (impl/create-database client arg-map))
+    (impl/create-database client (merge {:db-name db-name} arg-map)))
   (delete-database [_ arg-map]
-    (impl/delete-database client arg-map)))
+    (impl/delete-database client (merge {:db-name db-name} arg-map))))
 
 (defmethod mop/find-class-using-env [clojure.lang.Keyword datomic.core.db.Db]
   [ident env]
