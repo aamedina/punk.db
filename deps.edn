@@ -2,9 +2,9 @@
  {com.datomic/dev-local
   {:mvn/version "1.0.243"}
   io.github.aamedina/rdf
-  {:git/sha "5b4ad4ceed700803ddb165b6889ef016ae4d23d8"}
-  io.github.aamedina/db
-  {:git/sha "dda90900d91b1055866885a64872b23f4223e62e"}
+  {:git/sha "af7fcc711af66daa963a757c9c922b08a45ae7d8"}
+  io.github.aamedina/datomic
+  {:git/sha "36bebc7ec727e3611b1118ee663f9bd32123cc30"}
   org.clojure/clojure
   {:mvn/version "1.11.1"}}
  :paths ["src" "classes" "resources"]

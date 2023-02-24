@@ -10,7 +10,8 @@
    [net.wikipunk.ext]
    [net.wikipunk.db.boot]
    [net.wikipunk.punk.db.boot]   
-   [net.wikipunk.rdf :as rdf]))
+   [net.wikipunk.rdf :as rdf]
+   [net.wikipunk.mop :as mop]))
 
 (defprotocol Seed
   "Helper protocol to bootstrap attributes from loaded metaobjects."
@@ -97,7 +98,11 @@
    :rdfa/prefix
    :fressian/tag
    :schema/rangeIncludes
-   :schema/domainIncludes])
+   :schema/domainIncludes
+   :skos/broader
+   :skos/narrower
+   :skos/inScheme
+   :skos/member])
 
 (extend-protocol Seed
   clojure.lang.Namespace
@@ -161,7 +166,7 @@
   "warning: very experimental
 
   requires datomic.client.api on the classpath"
-  ([conn] (bootstrap rdf/*metaobjects* conn :force? false))
+  ([conn] (bootstrap mop/*metaobjects* conn :force? false))
   ([h conn & {:keys [force?]}]
    (let [bootstrap? (or force? (== (:datoms (d/db-stats (d/db conn))) 217))
          tx-data    (select-attributes bootstrap?)
@@ -226,7 +231,6 @@
                            :db/cardinality
                            :db/valueType
                            :db/isComponent
-                           :db/fulltext
                            :db/tupleAttrs
                            :db/tupleType
                            :db/tupleTypes
